@@ -1,0 +1,27 @@
+extends drawerLayout
+
+
+block content
+  a(href="/") Atgal
+  h1 #{title}  
+  body
+    //set to back to /wateringOn. Testing function /facebook. 
+    // Initially was /indexWateringC
+    form(name='toggleForm' id='toggleFormId' action='/indexWindowC' method='post')
+      .switchDiv
+          input#switchHidden(type='hidden' name='window_control' value='WINDOW CLOSES' onClick='send()')
+          input#switch.checkbox(type='checkbox' name='window_control' value='WINDOW OPENS' onClick='send()')
+          label.toggle(for='switch')
+            br
+            p.toggleText &nbspON&nbsp&nbsp&nbspOFF&nbsp
+          #output   
+    script.
+       function send(){
+          if (document.getElementById("switch").checked) {
+             document.getElementById('switchHidden').disabled = true;
+          }
+          else {
+             document.getElementById('switchHidden').disabled = false;
+          }
+          document.toggleForm.submit();
+        }

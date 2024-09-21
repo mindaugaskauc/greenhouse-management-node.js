@@ -1,0 +1,16 @@
+extends drawerLayout
+
+
+block content
+  a(href="/") Atgal
+  h1 #{title}  
+  body
+    form(action='#')
+      .tasksAreaDiv
+         textarea#tasks(name='tasks' rows='10' cols='50')
+         //- 
+            #tasks is id='tasks'
+      .tasksButtonDiv
+         button(type='submit') SIŲSTI
+         //- 
+            #tasks is id='tasks'

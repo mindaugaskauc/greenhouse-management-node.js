@@ -1,0 +1,39 @@
+extends formLayout
+
+block content
+  h1= title
+  p.lead
+    <p style="color:Tomato;">#{serverErr}</p>
+    | Prisijunkite prie savo paskyros 
+    br
+    | Neturite paskyros? 
+    a(href='/registerc')  Užsiregistruokite.
+    br
+    | Pamiršote savo slaptažodį? 
+    a(href='/sendPasswordLinkc') Spauskite čia
+    form(action="/loginc",method="post", onSubmit="return saveFields();")
+      <p style="color:Tomato;">#{emailErr} #{emailFormatErr} #{unknownEmailErr}</p>
+      label(for="email") Elektroninis paštas
+      br
+      input(type="text",name="email", id="emailId")
+      br
+      br
+      <p style="color:Tomato;">#{passwordErr} #{wrongPasswordErr} </p>
+      label(for="password") Slaptažodis
+      br
+      input(type="password",name="password")
+      br
+      br
+      input(type="submit",value="Prisijungti")
+
+      script.
+            document.getElementById("emailId").value = localStorage.getItem("emailKey");
+
+            function saveFields() {
+               
+               var keyEmailValue  = document.getElementById("emailId").value;
+               localStorage.setItem("emailKey", keyEmailValue);
+    
+               location.reload();
+               return true;
+            }

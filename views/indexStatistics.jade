@@ -1,0 +1,67 @@
+extends drawerLayout
+
+
+block content
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
+  a(href="/") Atgal
+  h1 #{title}
+  body
+   .chartDiv
+     canvas(id = 'myChart' style='width:100%;max-width:1500px')
+      script.
+        var objArray = [];
+         
+        let humidityDate = [], humidityData = []
+       
+        async function humidityChart () {
+        await getData()
+        let chart = new Chart("myChart", {
+            type: "line",
+            data: {
+             labels: humidityDate, // x values
+             datasets: [{
+               fill: true,
+               lineTension: 100,
+               backgroundColor: "rgba(0,0,255,1.0)",
+               borderColor: "rgba(0,0,255,0.1)",
+               data: humidityData  // y values
+              }]
+            },
+           options: {
+             legend: {display: false},
+             scales: {
+               yAxes: [{ticks: {min: 1, max:30}}],
+               xAxes: [{display: false}],
+             }
+
+
+           }
+         });
+        }
+        humidityChart()
+
+        async function getData() {
+           // let dataArray = [];
+           // let response = await fetch('http://10.0.2.5:3000/soilh');
+          const response = await fetch('http://10.0.2.5:3000/soilh/all');
+          const soil_humidity = await response.text();
+          // Convert JSON string to javascript object
+          const objArray = JSON.parse(soil_humidity);
+            //Iterate through javascript object
+            for (let i = 0; i < objArray.length; i++) {
+              //console.log(`${i} timestamp:${objArray[i].timestamp}, value:${objArray[i].value}`)
+              objArray[i].timestamp = new Date(objArray[i].timestamp);
+             // dataArray.push(objArray[i].timestamp);
+             // dataArray.push(objArray[i].value);
+          } 
+          const date = objArray.map( (x) => x.timestamp)
+          const humidity = objArray.map( (y) => y.value)
+
+          humidityDate = date
+          humidityData = humidity
+
+          console.log(humidity); 
+         }
+        
+            getData();
+        

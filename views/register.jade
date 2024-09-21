@@ -1,0 +1,54 @@
+extends formLayout
+
+block content
+  h1= title 
+  body
+    p.lead
+      <p style="color:Tomato;">#{serverErr}</p>
+      | Susikurkite savo paskyrą. Turite paskyrą?
+      a(href='/loginc')  Prisijunkite
+      form(action="registerc", method="post", onSubmit="return saveFields();")
+        <p style="color:Tomato;">#{firstnameErr}</p>
+        label(for="firstname") Vardas
+        br 
+        input(type="text", name="firstname", id="firstnameId")
+        br
+        br
+        <p style="color:Tomato;">#{lastnameErr}</p>
+        label(for="lastname") Pavardė
+        br 
+        input(type="text", name="lastname", id="lastnameId")
+        br
+        br
+        <p style="color:Tomato;">#{emailErr} #{emailFormatErr} #{doubleEmailErr}</p>
+        label(for="email") Elektroninis paštas 
+        br
+        input(type="text",name="email", id="emailId")
+        br
+        br
+        <p style="color:Tomato;">#{passwordErr}</p>
+        label(for="password") Slaptažodis 
+        br
+        input(type="password",name="password")
+        br
+        br
+        input(type="submit", value="Užsiregistruoti")
+         
+        script.
+            document.getElementById("firstnameId").value = localStorage.getItem("firstnameKey");
+            document.getElementById("lastnameId").value = localStorage.getItem("lastnameKey");
+            document.getElementById("emailId").value = localStorage.getItem("emailKey");
+
+            function saveFields() {
+               var keyFirstnameValue  = document.getElementById("firstnameId").value;
+               localStorage.setItem("firstnameKey", keyFirstnameValue);
+
+               var keyLastnameValue  = document.getElementById("lastnameId").value;
+               localStorage.setItem("lastnameKey", keyLastnameValue);
+
+               var keyEmailValue  = document.getElementById("emailId").value;
+               localStorage.setItem("emailKey", keyEmailValue);
+    
+               location.reload();
+               return true;
+            }

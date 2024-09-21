@@ -1,0 +1,21 @@
+extends drawerLayout
+
+
+block content
+  a(href="/") Atgal
+  h1 #{title}
+   p.sensor #{value}%   
+  body
+    form(action="/soilh/", method="post")
+      .sensorDiv
+         <p style="color:Tomato;">#{limFormatErr} </p>
+         label.sensorLabel(for='min') MIN
+         input(type='text' name='minValue' id='minValueId' maxlength='5' size='1')
+      .sensorDiv
+         label.sensorLabel(for='max') MAX
+         input(type='text' name='maxValue' id='maxValueId' maxlength='5' size='1')
+      .sensorDiv
+         button(type='submit') NUSTATYTI
+
+    script.
+        setInterval("location.reload(true);", 20000);
